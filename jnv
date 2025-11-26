@@ -1,0 +1,55 @@
+# Simple Attendance Management Program for JNV
+
+students = {}  # { "name" : {"present": 0, "total": 0} }
+
+def add_student():
+    name = input("Enter student name: ")
+    if name not in students:
+        students[name] = {"present": 0, "total": 0}
+        print(f"{name} added successfully!")
+    else:
+        print("Student already exists!")
+
+def mark_attendance():
+    print("\nMark Attendance")
+    for name in students:
+        status = input(f"Is {name} present? (y/n): ").lower()
+        students[name]["total"] += 1
+        if status == "y":
+            students[name]["present"] += 1
+    print("Attendance marked for the day!\n")
+
+def show_report():
+    print("\nAttendance Report:")
+    print("-" * 40)
+    for name, data in students.items():
+        if data["total"] == 0:
+            percentage = 0
+        else:
+            percentage = (data["present"] / data["total"]) * 100
+        print(f"{name}: {percentage:.2f}% attendance")
+    print("-" * 40)
+
+def menu():
+    while True:
+        print("\n--- JNV Attendance System ---")
+        print("1. Add Student")
+        print("2. Mark Attendance for Today")
+        print("3. Show Attendance Report")
+        print("4. Exit")
+
+        choice = input("Select an option (1-4): ")
+
+        if choice == "1":
+            add_student()
+        elif choice == "2":
+            mark_attendance()
+        elif choice == "3":
+            show_report()
+        elif choice == "4":
+            print("Exiting program...")
+            break
+        else:
+            print("Invalid choice! Try again.")
+
+menu()
